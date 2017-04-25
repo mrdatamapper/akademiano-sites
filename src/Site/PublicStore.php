@@ -4,7 +4,7 @@
 namespace Akademiano\Sites\Site;
 
 
-class PublicStore extends Directory
+class PublicStore extends FlowDirectory
 {
     const GLOBAL_DIR = "published";
     const INTERNAL_DIR = "public";
@@ -57,5 +57,4 @@ class PublicStore extends Directory
         $file->setWebPath($fileWebPath);
         return $file;
     }
-
 }

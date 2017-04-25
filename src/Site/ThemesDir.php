@@ -14,17 +14,17 @@ class ThemesDir extends Directory
 
     public function __construct($path)
     {
-        $this->setInternalPath($path);
+        $this->setPath($path);
     }
 
     public function getTheme($name)
     {
         if (!key_exists($name, $this->themes)) {
-            $themePath = realpath($this->getInternalPath() . DIRECTORY_SEPARATOR . $name);
+            $themePath = realpath($this->getPath() . DIRECTORY_SEPARATOR . $name);
             if (!is_dir($themePath)) {
                 $this->themes[$name] = false;
             } else {
-                if (!FileSystem::inDir($this->getInternalPath(), $themePath)) {
+                if (!FileSystem::inDir($this->getPath(), $themePath)) {
                     throw new AccessDeniedException();
                 }
                 $this->themes[$name] = new Theme($name, $themePath);

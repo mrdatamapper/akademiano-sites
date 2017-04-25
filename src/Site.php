@@ -5,8 +5,10 @@ namespace Akademiano\Sites;
 
 
 use Akademiano\SimplaView\AbstractView;
+use Akademiano\Sites\Site\ConfigDir;
 use Akademiano\Sites\Site\DataStore;
 use Akademiano\Sites\Site\PublicStore;
+use Akademiano\Sites\Site\Theme;
 use Akademiano\Sites\Site\ThemesDir;
 use Composer\Autoload\ClassLoader;
 
@@ -36,6 +38,9 @@ abstract class Site implements SiteInterface
 
     /** @var  ThemesDir */
     protected $themesDir;
+
+    /** @var  ConfigDir */
+    protected $configDir;
 
     /**
      * Site constructor.
@@ -248,6 +253,41 @@ abstract class Site implements SiteInterface
     public function setThemesDir(ThemesDir $themesDir)
     {
         $this->themesDir = $themesDir;
+    }
+
+    /**
+     * @param $theme
+     * @return Theme|null
+     */
+    public function getTheme($theme)
+    {
+        if ($this->getThemesDir()) {
+            return $this->getThemesDir()->getTheme($theme);
+        }
+    }
+
+    /**
+     * @return ConfigDir
+     */
+    public function getConfigDir()
+    {
+        if (null === $this->configDir) {
+            $configPath = $this->getPath() . DIRECTORY_SEPARATOR . \Akademiano\Config\ConfigLoader::NAME_CONFIG;
+            if (!is_dir($configPath) || !is_readable($configPath)) {
+                $this->configDir = false;
+            } else {
+                $this->configDir = new ConfigDir($configPath);
+            }
+        }
+        return (false !== $this->configDir) ? $this->configDir : null;
+    }
+
+    /**
+     * @param ConfigDir $configDir
+     */
+    public function setConfigDir($configDir)
+    {
+        $this->configDir = $configDir;
     }
 
     public function __toString()

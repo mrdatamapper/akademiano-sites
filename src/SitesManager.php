@@ -124,7 +124,7 @@ class SitesManager implements EnvironmentIncludeInterface
             }
             $this->currentSite = $site->getName();
         }
-        return $this->sites[$this->currentSite];
+        return $this->getSite($this->currentSite);
     }
 
     public function getSharedSite()

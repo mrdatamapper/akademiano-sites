@@ -4,7 +4,7 @@
 namespace Akademiano\Sites\Site;
 
 
-class DataStore extends Directory
+class DataStore extends FlowDirectory
 {
 
 
